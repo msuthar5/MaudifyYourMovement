@@ -7,9 +7,9 @@ import time
 
 
 class MaudifyYourMovementSimulator(threading.Thread):
-    def __init__(self, observers, delay = 0.1, state_size=1):
+    def __init__(self, observers, delay = 0.1, state_size=1, verbose=False, frequency=12):
         threading.Thread.__init__(self)
-        self.sg = state_generator.StateGenerator(count=state_size)
+        self.sg = state_generator.StateGenerator(count=state_size, verbose=verbose, frequency=frequency)
         for key, item in observers.items():
             self.sg.add_observer(metawear_csvreader.MetaWearCsvReader(item, key))
         self.gd = gesture_detector.GestureDetector()

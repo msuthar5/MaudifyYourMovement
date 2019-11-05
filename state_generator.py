@@ -3,7 +3,7 @@ from datetime import datetime
 import threading
 
 class StateGenerator(threading.Thread):
-    def __init__(self, count=10, frequency=12):
+    def __init__(self, count=10, frequency=12, verbose=False):
         threading.Thread.__init__(self)
         self.time_wait = 1.0 / frequency
         self.count = count
@@ -12,6 +12,7 @@ class StateGenerator(threading.Thread):
         self.readable_state = []
         self.observers = []
         self.running = False
+        self.verbose = verbose
     
     def add_observer(self, observer):
         self.observers.append(observer)
@@ -24,6 +25,8 @@ class StateGenerator(threading.Thread):
             out[observer.name + "_z"] = observer.z
         
         self.data.append(out)
+        if self.verbose is True:
+            print(out)
         while len(self.data) > self.count:
             self.data.pop(0)
         
@@ -42,6 +45,7 @@ class StateGenerator(threading.Thread):
         self.running = True
 
         while self.running is True:
+            time.sleep(self.time_wait)
             self.observe()
 
     def stop(self):

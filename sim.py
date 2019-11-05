@@ -8,6 +8,6 @@ OBSERVERS = {
 
 
 
-with mym_sim.MaudifyYourMovementSimulator(OBSERVERS) as m:
+with mym_sim.MaudifyYourMovementSimulator(OBSERVERS, verbose=True, frequency=12) as m:
     while True:
         pass
